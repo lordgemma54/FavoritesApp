@@ -17,6 +17,7 @@ class FavoritesViewModel : ObservableObject {
 //    an init function calls whatevers inside as soon as this ViewModel is created
     init() {
         loadFavoriteCities()
+        loadFavoriteHobbies()
     }
     
 //    $0 is the current city in the cities array
@@ -52,6 +53,38 @@ class FavoritesViewModel : ObservableObject {
             }
         }
     }
+    
+    func filteredHobbies(searchText: String) -> [HobbyModel] {
+        if searchText.isEmpty {
+            return hobbies
+        } else {
+            return hobbies.filter {
+                $0.hobbyName.lowercased().contains(searchText.lowercased())
+            }
+        }
+    }
+    
+    func saveFavoriteHobbies() {
+        let favoriteHobbyIds = hobbies.filter({ $0.isFavorite }).map { $0.id }
+        UserDefaults.standard.set(favoriteHobbyIds, forKey: "favoriteHobbies")
+    }
+    
+    func loadFavoriteHobbies() {
+        if let favoriteHobbyIds = UserDefaults.standard.array(forKey: "favoriteHobbies") as? [Int] {
+            for index in hobbies.indices {
+                hobbies[index].isFavorite = favoriteHobbyIds.contains(hobbies[index].id)
+            }
+        }
+    }
+    
+    func toggleFavoriteHobby(hobby: HobbyModel) {
+        if let index = hobbies.firstIndex(where: { $0.id == hobby.id}) {
+            hobbies[index].isFavorite.toggle()
+            saveFavoriteHobbies()
+        }
+        
+    }
+    
 }
 
 
