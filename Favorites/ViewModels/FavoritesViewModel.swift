@@ -16,7 +16,7 @@ class FavoritesViewModel : ObservableObject {
     
     private let cityManager = CategoryManager<CityModel>(storageKey : "favoriteCities")
     private let hobbyManager = CategoryManager<HobbyModel>(storageKey : "favoriteHobbies")
-//    private let bookManager = CategoryManager<BookModel>(storageKey : "favoriteBooks")
+    private let bookManager = CategoryManager<BookModel>(storageKey : "favoriteBooks")
     
 //    an init function calls whatevers inside as soon as this ViewModel is created
     init() {
@@ -24,7 +24,7 @@ class FavoritesViewModel : ObservableObject {
 //        loadFavoriteHobbies() //old
         cities = cityManager.initializeFavorites(items: sampleCities)
         hobbies = hobbyManager.initializeFavorites(items: sampleHobbies)
-//        books = bookManager.initializeFavorites(items: sampleBooks)
+        books = bookManager.initializeFavorites(items: sampleBooks)
     }
     
 //    $0 is the current city in the cities array
@@ -87,10 +87,16 @@ class FavoritesViewModel : ObservableObject {
         hobbyManager.toggleFavorite(items: &hobbies, targetItem: hobby)
     }
     
+    
     func clearAllFavorites(){
         cityManager.clearFavorites(items: &cities)
         hobbyManager.clearFavorites(items: &hobbies)
 //        bookManager.clearFavorites(items: &books)
+    }
+    
+//    --------------------- BOOKS SECTION ---------------------
+    func toggleFavoriteBook(book: BookModel) {
+        bookManager.toggleFavorite(items: &books, targetItem: book)
     }
     
 }
