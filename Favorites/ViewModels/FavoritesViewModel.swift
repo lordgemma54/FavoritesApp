@@ -14,75 +14,83 @@ class FavoritesViewModel : ObservableObject {
     @Published var hobbies: [HobbyModel] = sampleHobbies
     @Published var books: [BookModel] = sampleBooks
     
+    private let cityManager = CategoryManager<CityModel>(storageKey : "favoriteCities")
+    private let hobbyManager = CategoryManager<HobbyModel>(storageKey : "favoriteHobbies")
+//    private let bookManager = CategoryManager<BookModel>(storageKey : "favoriteBooks")
+    
 //    an init function calls whatevers inside as soon as this ViewModel is created
     init() {
-        loadFavoriteCities()
-        loadFavoriteHobbies()
+//        loadFavoriteCities() //old
+//        loadFavoriteHobbies() //old
+        cities = cityManager.initializeFavorites(items: sampleCities)
+        hobbies = hobbyManager.initializeFavorites(items: sampleHobbies)
+//        books = bookManager.initializeFavorites(items: sampleBooks)
     }
     
 //    $0 is the current city in the cities array
     func filteredCities(searchText: String) -> [CityModel] {
-        if searchText.isEmpty {
-            return cities
-        } else {
-            return cities.filter {
-                $0.cityName.lowercased().contains(searchText.lowercased())
-            }
-        }
+//        if searchText.isEmpty {
+//            return cities
+//        } else {
+//            return cities.filter {
+//                $0.cityName.lowercased().contains(searchText.lowercased())
+//            }
+//        }
+        cityManager.filteredItem(items: cities, searchText: searchText)
     }
     
 //    if let = optional binding, the variable index is only assigned if a matching city was found
     func toggleFavoriteCity(city: CityModel) {
-        if let index = cities.firstIndex(where: { $0.id == city.id}) {
-            cities[index].isFavorite.toggle()
-            saveFavoriteCities()
-        }
+//        if let index = cities.firstIndex(where: { $0.id == city.id}) {
+//            cities[index].isFavorite.toggle()
+//            saveFavoriteCities()
+//        }
+        cityManager.toggleFavorite(items: &cities, targetItem: city)
     }
     
-//    stores an array of favorited city IDs, stored in favoriteCities
-    func saveFavoriteCities() {
-        let favoriteCities = cities.filter({ $0.isFavorite }).map { $0.id }
-        UserDefaults.standard.set(favoriteCities, forKey: "favoriteCities")
-    }
-    
-//    loads favorite cities when the applaunches so the favorite cities persist from session to session
-    func loadFavoriteCities() {
-        if let favoriteCityIds = UserDefaults.standard.array(forKey: "favoriteCities") as? [Int] {
-            for index in cities.indices {
-                cities[index].isFavorite = favoriteCityIds.contains(cities[index].id )
-            }
-        }
-    }
+////    stores an array of favorited city IDs, stored in favoriteCities
+//    func saveFavoriteCities() {
+////        this logic now moved to the CategoryManager class
+//        
+////        let favoriteCities = cities.filter({ $0.isFavorite }).map { $0.id }
+////        UserDefaults.standard.set(favoriteCities, forKey: "favoriteCities")
+//    }
+//    
+////    loads favorite cities when the applaunches so the favorite cities persist from session to session
+//    func loadFavoriteCities() {
+//        if let favoriteCityIds = UserDefaults.standard.array(forKey: "favoriteCities") as? [Int] {
+//            for index in cities.indices {
+//                cities[index].isFavorite = favoriteCityIds.contains(cities[index].id )
+//            }
+//        }
+//    }
     
     func filteredHobbies(searchText: String) -> [HobbyModel] {
-        if searchText.isEmpty {
-            return hobbies
-        } else {
-            return hobbies.filter {
-                $0.hobbyName.lowercased().contains(searchText.lowercased())
-            }
-        }
+        hobbyManager.filteredItem(items: hobbies, searchText: searchText)
     }
     
-    func saveFavoriteHobbies() {
-        let favoriteHobbyIds = hobbies.filter({ $0.isFavorite }).map { $0.id }
-        UserDefaults.standard.set(favoriteHobbyIds, forKey: "favoriteHobbies")
-    }
-    
-    func loadFavoriteHobbies() {
-        if let favoriteHobbyIds = UserDefaults.standard.array(forKey: "favoriteHobbies") as? [Int] {
-            for index in hobbies.indices {
-                hobbies[index].isFavorite = favoriteHobbyIds.contains(hobbies[index].id)
-            }
-        }
-    }
+//    No longer needed
+//    func saveFavoriteHobbies() {
+//        let favoriteHobbyIds = hobbies.filter({ $0.isFavorite }).map { $0.id }
+//        UserDefaults.standard.set(favoriteHobbyIds, forKey: "favoriteHobbies")
+//    }
+//    
+//    func loadFavoriteHobbies() {
+//        if let favoriteHobbyIds = UserDefaults.standard.array(forKey: "favoriteHobbies") as? [Int] {
+//            for index in hobbies.indices {
+//                hobbies[index].isFavorite = favoriteHobbyIds.contains(hobbies[index].id)
+//            }
+//        }
+//    }
     
     func toggleFavoriteHobby(hobby: HobbyModel) {
-        if let index = hobbies.firstIndex(where: { $0.id == hobby.id}) {
-            hobbies[index].isFavorite.toggle()
-            saveFavoriteHobbies()
-        }
-        
+        hobbyManager.toggleFavorite(items: &hobbies, targetItem: hobby)
+    }
+    
+    func clearAllFavorites(){
+        cityManager.clearFavorites(items: &cities)
+        hobbyManager.clearFavorites(items: &hobbies)
+//        bookManager.clearFavorites(items: &books)
     }
     
 }
