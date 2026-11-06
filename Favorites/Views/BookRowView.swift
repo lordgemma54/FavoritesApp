@@ -13,23 +13,34 @@ struct BookRowView: View {
     @EnvironmentObject private var favorites : FavoritesViewModel
     
     var body: some View {
-        HStack {
-            Text("📖")
-            Text(book.bookTitle)
-                .padding()
-            
-            Text(book.bookAuthor)
-            
-            Spacer()
-            
-            Button(action: {
-                favorites.toggleFavoriteBook(book: book)
-            }) {
-                Image(systemName: book.isFavorite ? "heart.fill" : "heart")
-                    .foregroundStyle(book.isFavorite ? .red : .gray)
+        VStack {
+            HStack {
+                Text("📖")
+                Text(book.bookTitle)
+                    .padding()
+                
+    //            Text(book.bookAuthor)
+                
+                Spacer()
+                
+                Button(action: {
+                    favorites.toggleFavoriteBook(book: book)
+                }) {
+                    Image(systemName: book.isFavorite ? "heart.fill" : "heart")
+                        .foregroundStyle(book.isFavorite ? .red : .gray)
+                }
             }
+            
+            HStack {
+               
+                Text("Author: ")
+                Text(book.bookAuthor)
+                Spacer()
+                
+            
         }
-        
+        }
+    
     }
 }
 
