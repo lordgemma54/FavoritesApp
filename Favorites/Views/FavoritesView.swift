@@ -17,9 +17,9 @@ struct FavoritesView: View {
                 Text("Cities")
                     .font(.headline)
 //
-                let favoriteCitiesIds : [Int] = loadFavoriteIds(storageKey: "favoriteCities")
+                let favoriteCityIds : [Int] = loadFavoriteIds(storageKey: "favoriteCities")
                 
-                ForEach( favoriteCitiesIds, id: \.self) {cityId in
+                ForEach( favoriteCityIds, id: \.self) {cityId in
                     if let matchedCity = favorites.cities.first(where: {$0.id == cityId}) {
                         CityCardView(city: matchedCity)
                 }
@@ -30,6 +30,14 @@ struct FavoritesView: View {
             VStack {
                 Text("Hobbies")
                     .font(.headline)
+                
+                let favoriteHobbyIds : [Int] = loadFavoriteIds(storageKey: "favoriteHobbies")
+                
+                ForEach( favoriteHobbyIds, id: \.self) {hobbyId in
+                    if let matchedHobby = favorites.hobbies.first(where: {$0.id == hobbyId}) {
+                        HobbyRowView(hobby: matchedHobby)
+                    }
+                }
             }
             
             VStack {
