@@ -19,7 +19,7 @@ struct BooksView: View {
                     BookRowView(book: book)
                 }
             }
-//            .padding()
+            .padding()
         }
     
     }
