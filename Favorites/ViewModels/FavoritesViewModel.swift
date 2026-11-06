@@ -91,7 +91,7 @@ class FavoritesViewModel : ObservableObject {
     func clearAllFavorites(){
         cityManager.clearFavorites(items: &cities)
         hobbyManager.clearFavorites(items: &hobbies)
-//        bookManager.clearFavorites(items: &books)
+        bookManager.clearFavorites(items: &books)
     }
     
 //    --------------------- BOOKS SECTION ---------------------

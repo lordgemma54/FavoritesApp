@@ -16,6 +16,7 @@ struct FavoritesView: View {
             VStack {
                 Text("Cities")
                     .font(.headline)
+                
 //
                 let favoriteCityIds : [Int] = loadFavoriteIds(storageKey: "favoriteCities")
                 
@@ -25,7 +26,8 @@ struct FavoritesView: View {
                 }
                     }
                 }
-            }
+            Divider()
+            
             
             VStack {
                 Text("Hobbies")
@@ -38,20 +40,30 @@ struct FavoritesView: View {
                         HobbyRowView(hobby: matchedHobby)
                     }
                 }
+                
             }
+            Divider()
             
             VStack {
                 Text("Books")
+                    .font(.headline)
+                
+                let favoriteBookIds : [Int] = loadFavoriteIds(storageKey: "favoriteBooks")
+                
+                ForEach( favoriteBookIds, id: \.self) {bookId in
+                    if let matchedBook = favorites.books.first(where: {$0.id == bookId}) {
+                        BookRowView(book: matchedBook)
+                    }
+                }
             }
+        Divider()
         }
-        
-//        Text("Favorites")
     }
     
     func loadFavoriteIds(storageKey : String) -> [Int] {
         return UserDefaults.standard.array(forKey: storageKey) as? [Int] ?? []
     }
-
+}
 
 //#Preview {
 //    FavoritesView()
