@@ -11,7 +11,7 @@ struct FavoritesView: View {
     
     @EnvironmentObject private var favorites : FavoritesViewModel
     
-    //    using computed properties to load the Int arrays. Putting these inside a scrollView, didnt allow the hearts to show in the favorites list
+    //    I used computed properties here to try an address a bug: originally the logic for loading the categories into arrays was inside the ScrollView which pushed the heart buttons and icons outside the view horizontally. I thought putting them into computed properties outside the scrollview would fix the bug but it did not. Ultimately using computed properties was a good way to practice using them and made the code a little easier to understand, but using a GeometryReader in the CityCardView actually fixed the bug. 
     
     private var favoriteCitiesArray: [CityModel] {
         let favoriteCityIds : [Int] = loadFavoriteIds(storageKey: "favoriteCities")
@@ -37,6 +37,17 @@ struct FavoritesView: View {
         return favoriteHobbies
     }
     
+    private var favoriteBooksArray: [BookModel] {
+        let favoriteBookIds : [Int] = loadFavoriteIds(storageKey: "favoriteBooks")
+        var favoriteBooks : [BookModel] = []
+        
+        for bookId in favoriteBookIds {
+            if let matchedBook = favorites.books.first(where: {$0.id == bookId}) {
+                favoriteBooks.append(matchedBook)
+            }
+        }
+        return favoriteBooks
+    }
     
     
     var body: some View {
@@ -67,15 +78,11 @@ struct FavoritesView: View {
                 Text("Books")
                     .font(.headline)
                 Divider()
-
-                let favoriteBookIds : [Int] = loadFavoriteIds(storageKey: "favoriteBooks")
                 
-                ForEach( favoriteBookIds, id: \.self) {bookId in
-                    if let matchedBook = favorites.books.first(where: {$0.id == bookId}) {
-                        BookRowView(book: matchedBook)
+                ForEach( favoriteBooksArray, id: \.id) {book in
+                        BookRowView(book: book)
                     }
                 }
-            }
             }
 //            .border(.orange) // border for debugging - remove
         }

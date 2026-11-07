@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// CaseIterable allows these enums to be looped over when building the UI
 enum ContentCategory : String, CaseIterable{
     case cities = "Cities"
     case hobbies = "Hobbies"
@@ -39,7 +38,6 @@ struct HomeView: View {
         }
     }
     
-//  allows for multiple views in a func or closure and returns a TupleView<Text, Text>
     @ViewBuilder
     private func selectedContentView() -> some View {
         if selectedCategory == .cities {
