@@ -8,10 +8,8 @@
 import Foundation
 
 class CategoryManager<T: Favoritable> {
-    //    unique for each category so each categories favorites are saved separately in UserDefaults
     private let storageKey : String
     
-    //    this helps each categoryManager instance know where to read and write its data to / from
     init(storageKey : String) {
         self.storageKey = storageKey
     }
@@ -27,13 +25,10 @@ class CategoryManager<T: Favoritable> {
     }
     
     
-    //    stores favorite ids for each category in the category manager
     func saveFavoriteIds(ids: [Int]) {
         UserDefaults.standard.set(ids, forKey: storageKey)
     }
     
-    
-    //    filtering
     func filteredItem(items: [T], searchText: String) -> [T  ] {
         if searchText.isEmpty {
             return items
@@ -45,7 +40,6 @@ class CategoryManager<T: Favoritable> {
     }
     
     
-    //    loads favorite ids when app starts so favorites persist
     func loadFavoriteIds() -> [Int] {
         return UserDefaults.standard.array(forKey: storageKey) as? [Int] ?? []
     }
@@ -53,7 +47,6 @@ class CategoryManager<T: Favoritable> {
     
     func initializeFavorites(items: [T]) -> [T] {
         let savedIds = loadFavoriteIds()
-        //        creates a copy of the items array called updatedItem and adds any new favorites to this new array inside the loop
         return items.map { item in
             var updatedItem = item
             updatedItem.isFavorite = savedIds.contains(item.id)
@@ -62,7 +55,6 @@ class CategoryManager<T: Favoritable> {
     }
     
     
-    //    clears all favorites (sets all isFavorites flags to false) and removes the saveFavoriteIds from UserDefaults
     func clearFavorites(items: inout [T]) {
         for index in items.indices{
             items[index].isFavorite = false

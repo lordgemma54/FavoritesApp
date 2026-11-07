@@ -32,24 +32,17 @@ struct BookRowView: View {
                 .padding(.horizontal, 20)
             }
             .padding(.horizontal, 10)
-//            .border(.blue) // border for debugging - remove
+            
             HStack {
-               
                 Text("Author: ")
                 Text(book.bookAuthor)
                 Spacer()
-                
             }
             .padding(.horizontal, 10)
-//            .border(.green) // border for debugging - remove
         }
-//        .border(.red) // border for debugging - remove
         .padding(.vertical, 6)
         
         Divider()
-//        .background(
-//            index.isMultiple(of: 2) ? Color.gray.opacity(0.12) : Color.clear
-//        )
     }
 }
 

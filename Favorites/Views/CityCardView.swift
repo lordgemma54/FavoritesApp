@@ -13,6 +13,7 @@ struct CityCardView: View {
     @EnvironmentObject private var favorites : FavoritesViewModel
     
     var body: some View {
+//        Used google to help with improper sizing caused by these cityCards. I believe the images were causing each HStack in the ScrollView in FavoritesView to be wider than the screen and I was losing the icons and the heart buttons for the books and hobbies sections. Geometry reader fixed this issue after trying several other solutions
         GeometryReader { geometry in
             ZStack (alignment: .bottom) {
                 Image(city.cityImage)
@@ -22,7 +23,6 @@ struct CityCardView: View {
                         width: geometry.size.width,
                         height: geometry.size.height
                     )
-                //                .frame(maxWidth: .infinity) // added for testing
                     .clipped()
                 
                 HStack {
@@ -47,8 +47,6 @@ struct CityCardView: View {
                 .padding(.bottom, 10)
                 
             }
-            //        .frame(maxWidth: .infinity) // added for testing
-            //        .clipped() // added for testing
             .shadow(radius: 3)
         }
         .frame(height: 140)
