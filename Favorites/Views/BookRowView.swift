@@ -29,9 +29,9 @@ struct BookRowView: View {
                     Image(systemName: book.isFavorite ? "heart.fill" : "heart")
                         .foregroundStyle(book.isFavorite ? .red : .gray)
                 }
-                .padding(.horizontal, 30)
+                .padding(.horizontal, 20)
             }
-            
+            .padding(.horizontal, 10)
 //            .border(.blue) // border for debugging - remove
             HStack {
                
@@ -40,6 +40,7 @@ struct BookRowView: View {
                 Spacer()
                 
             }
+            .padding(.horizontal, 10)
 //            .border(.green) // border for debugging - remove
         }
 //        .border(.red) // border for debugging - remove

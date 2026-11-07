@@ -27,8 +27,9 @@ struct HobbyRowView: View {
                 Image(systemName: hobby.isFavorite ? "heart.fill" : "heart")
                     .foregroundStyle(hobby.isFavorite ? .red : .gray)
             }
-            .padding(.horizontal, 30)
+            .padding(.horizontal, 20)
         }
+        .padding(.horizontal, 10)
         .padding(.vertical, 2)
         
     }
