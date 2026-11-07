@@ -16,6 +16,7 @@ struct BookRowView: View {
         VStack(spacing: 1) {
             HStack {
                 Text("📖")
+                    .font(.title2)
                 Text(book.bookTitle)
                     .bold()
                     .padding(.vertical, 4)
