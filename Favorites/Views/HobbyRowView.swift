@@ -26,11 +26,11 @@ struct HobbyRowView: View {
             }) {
                 Image(systemName: hobby.isFavorite ? "heart.fill" : "heart")
                     .foregroundStyle(hobby.isFavorite ? .red : .gray)
-//                    .padding(6)
-//                    .foregroundStyle(hobby.isFavorite ? .red : .white)
-//                    .background(Color.black.opacity(0.35))
             }
+            .padding(.horizontal, 30)
         }
+        .padding(.vertical, 2)
+        
     }
 }
 

@@ -20,6 +20,8 @@ struct BooksView: View {
                 }
             }
             .padding()
+            
+//            Divider()
         }
     
     }
